@@ -35,8 +35,7 @@ Project Organization
     ├── src                <- Source code for use in this project.
     │   ├── __init__.py    <- Makes src a Python module
     │   │
-    │   ├── extract        <- Scripts to extract data
-    │   │   └── extract_weather.py
+	│   ├── data           <- Scripts to download or generate data
     │   │
     │   ├── features       <- Scripts to turn raw data into features for modeling
     │   │
@@ -45,7 +44,9 @@ Project Organization
     │   │
     │   ├── visualization  <- Scripts to create exploratory and results oriented visualizations
     │   │
-    │   └── elt.py
+    │   ├── elt.py
+    │   │
+    │   └── extract.py
     │
     └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
 

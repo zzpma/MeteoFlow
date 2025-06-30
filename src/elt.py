@@ -22,7 +22,7 @@ try:
 	raw_weather_data = extract(CITIES, YEAR, MONTH)
 	print(raw_weather_data)
 
-	logging.info("Successfully extracted, transformed, and loaded data.")
+	logging.info("Successfully extracted, loaded, and transformed data.")
 
 except Exception as err:
 	logging.error(f"Pipeline failed with error: {err}")
