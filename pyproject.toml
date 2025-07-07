@@ -1,0 +1,63 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cities_of_eternal_spring_in_europe"
+version = "0.1.0"
+description = "An ELT pipeline that extracts historical daily temperature data for major European cities from Open-Meteo, loads it into DuckDB, and performs SQL-based transformations for climate analysis."
+readme = "README.rst"
+authors = [
+  {name = "Philip Ma", email = "zz.pma2000@gmail.com"}
+]
+maintainers = [
+  {name = "Philip Ma", email = "zz.pma2000@gmail.com"}
+]
+classifiers = [
+
+]
+license = {text = "MIT license"}
+dependencies = [
+  "typer"
+]
+
+[project.optional-dependencies]
+dev = [
+    "coverage",  # testing
+    "mypy",  # linting
+    "pytest",  # testing
+    "ruff"  # linting
+]
+
+[project.urls]
+
+bugs = "https://github.com/zzpma/cities_of_eternal_spring_in_europe/issues"
+changelog = "https://github.com/zzpma/cities_of_eternal_spring_in_europe/blob/master/changelog.md"
+homepage = "https://github.com/zzpma/cities_of_eternal_spring_in_europe"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.package-data]
+"*" = ["*.*"]
+
+
+
+
+# Mypy
+# ----
+
+[tool.mypy]
+files = "."
+
+# Use strict defaults
+strict = true
+warn_unreachable = true
+warn_no_return = true
+
+[[tool.mypy.overrides]]
+# Don't require test functions to include types
+module = "tests.*"
+allow_untyped_defs = true
+disable_error_code = "attr-defined"
+
