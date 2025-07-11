@@ -2,6 +2,14 @@ import requests
 import calendar
 from datetime import datetime, timedelta
 
+def data_exists(con, city, year, month):
+    result = con.execute("""
+        SELECT 1 FROM weather 
+        WHERE city = ? AND strftime('%Y', date) = ? AND strftime('%m', date) = ?
+        LIMIT 1
+    """, (city, str(year), f"{month:02}")).fetchone()
+    return result is not None
+
 def get_coordinates(city_name):
     """Get latitude and longitude from city name using Open-Meteo Geocoding API."""
     url = f"https://geocoding-api.open-meteo.com/v1/search?name={city_name}&count=1&language=en&format=json"
@@ -24,7 +32,13 @@ def extract(city, year):
     lat, lon = get_coordinates(city)
     print(f"Geocoded {city}: lat={lat}, lon={lon}")
 
+    con = duckdb.connect("data/processed/weather.duckdb")
+
     for month in range(1, 13):
+        if data_exists(con, city, year, month):
+            print(f"Skipping {city} {calendar.month_name[month]} {year} — already in DB")
+            continue
+
         start_date = f"{year}-{month:02d}-01"
 
         if year == today.year and month == today.month:
