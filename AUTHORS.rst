@@ -4,10 +4,12 @@ Credits
 
 Development Lead
 ----------------
-
 * Philip Ma <zz.pma2000@gmail.com>
 
-Contributors
-------------
+Analysis Lead
+-------------
+* Ellah Benerado <add your email here Ellah>
 
-None yet. Why not be the first?
+Technical Mentor
+----------------
+* Marloe Uy <email>
