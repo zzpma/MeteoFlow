@@ -61,10 +61,17 @@ def extract(city, year):
         print(f"📡 Fetching {city} {calendar.month_name[month]} {year}... Status: {response.status_code}")
         data = response.json()
 
-        all_data.append({
-            "city": city,
-            "month": month,
-            "data": data
-        })
-
-    return all_data
+        if "daily" in data:
+            for date, tmin, tmax in zip(
+                data["daily"]["time"],
+                data["daily"]["temperature_2m_min"],
+                data["daily"]["temperature_2m_max"]
+            ):
+                all_data.append({
+                    "city": city,
+                    "date": date,
+                    "temp_min": tmin,
+                    "temp_max": tmax
+                })
+        else:
+            print(f"⚠️ No daily data found for {city} {calendar.month_name[month]} {year}")
