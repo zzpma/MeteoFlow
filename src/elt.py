@@ -19,7 +19,7 @@ YEAR = 2025
 MONTH = 5
 
 try:
-	raw_weather_data = extract(CITIES, YEAR, MONTH)
+	raw_weather_data = extract("paris", 2024)
 	print(raw_weather_data)
 
 	logging.info("Successfully extracted, loaded, and transformed data.")
