@@ -8,7 +8,7 @@ Development Lead
 
 Analysis Lead
 -------------
-* Ellah Benerado <add your email here Ellah>
+* Ellah Benerado <ebenerado@gmail.com>
 
 Technical Mentor
 ----------------
