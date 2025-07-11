@@ -1,6 +1,7 @@
 import requests
 import calendar
 from datetime import datetime, timedelta
+import duckdb
 
 def data_exists(con, city, year, month):
     result = con.execute("""
