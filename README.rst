@@ -54,6 +54,7 @@ Example:
    python . Lisbon 2024
 
 This:
+
 - Geocodes the city
 - Extracts daily weather data for all months in that year
 - Loads the results into `data/weather.duckdb`
