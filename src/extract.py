@@ -23,7 +23,7 @@ def get_coordinates(city):
 def extract(city, year):
     """Extract weather data for a specific city and year."""
     today = datetime.today()
-    all_data = []
+    year_data = []
 
     lat, lon = get_coordinates(city)
     print(f"Geocoded {city}: lat={lat}, lon={lon}")
@@ -49,21 +49,18 @@ def extract(city, year):
 
         response = requests.get(url)
         print(f"📡 Fetching {city} {calendar.month_name[month]} {year}... Status: {response.status_code}")
-        data = response.json()
+        month_data = response.json()
 
-        if "daily" in data:
-            for date, tmin, tmax in zip(
-                data["daily"]["time"],
-                data["daily"]["temperature_2m_min"],
-                data["daily"]["temperature_2m_max"]
-            ):
-                all_data.append({
-                    "city": city,
-                    "date": date,
-                    "temp_min": tmin,
-                    "temp_max": tmax
-                })
+        if "daily" in month_data:
+            year_data.extend(
+                (city, date, tmin, tmax)
+                for date, tmin, tmax in zip(
+                    month_data["daily"]["time"],
+                    month_data["daily"]["temperature_2m_min"],
+                    month_data["daily"]["temperature_2m_max"]
+                )
+            )
         else:
-            print(f"⚠️ No daily data found for {city} {calendar.month_name[month]} {year}")
-            
-    return [(d["city"], d["date"], d["temp_min"], d["temp_max"]) for d in all_data]
+            print(f"No daily data found for {city} {calendar.month_name[month]} {year}")
+
+    return year_data
