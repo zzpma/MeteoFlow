@@ -1,10 +1,9 @@
 import duckdb
 import logging
-from extract import extract
+from src.extract import extract
 # from load import load
 # from transform import transform
 
-logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 DB_PATH = "data/weather.duckdb"
 
 def run_pipeline(city, year):
@@ -30,6 +29,4 @@ def run_pipeline(city, year):
         logging.info(f"Data for {city}, {year} already in DB. Pipeline terminated.")
         return
     
-    todo = extract(city, year)
-
-    logging.info("Successfully extracted, loaded, and transformed data.")
+    print(extract(city, year))

@@ -65,3 +65,4 @@ def extract(city, year):
                 })
         else:
             print(f"⚠️ No daily data found for {city} {calendar.month_name[month]} {year}")
+    return all_data
