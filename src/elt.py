@@ -1,28 +1,35 @@
+import duckdb
 import logging
-
 from extract import extract
 # from load import load
 # from transform import transform
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
+DB_PATH = "data/weather.duckdb"
 
-print("Starting ELT pipeline...")
+def run_pipeline(city, year):
+    logging.info(f"Starting ELT pipeline for {city} in {year}...")
+    duck = duckdb.connect(DB_PATH)
 
-CITIES = [
-    {"name": "Paris",     "lat": 48.8566, "lon": 2.3522},
-    {"name": "Berlin",    "lat": 52.52,   "lon": 13.4050},
-    {"name": "Madrid",    "lat": 40.4168, "lon": -3.7038},
-    {"name": "Rome",      "lat": 41.9028, "lon": 12.4964},
-    {"name": "Amsterdam", "lat": 52.3676, "lon": 4.9041},
-]
-YEAR = 2025
-MONTH = 5
+    duck.execute("""
+        CREATE TABLE IF NOT EXISTS weather (
+            city TEXT,
+            date DATE,
+            temp_min DOUBLE,
+            temp_max DOUBLE
+        )
+    """)
+    
+    data_exists = duck.execute("""
+        SELECT 1 FROM weather 
+        WHERE city = ? AND strftime('%Y', date) = ?
+        LIMIT 1
+    """, (city, str(year))).fetchone()
+    
+    if data_exists:
+        logging.info(f"Data for {city}, {year} already in DB. Pipeline terminated.")
+        return
+    
+    todo = extract(city, year)
 
-try:
-	raw_weather_data = extract("paris", 2024)
-	print(raw_weather_data)
-
-	logging.info("Successfully extracted, loaded, and transformed data.")
-
-except Exception as err:
-	logging.error(f"Pipeline failed with error: {err}")
+    logging.info("Successfully extracted, loaded, and transformed data.")

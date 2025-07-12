@@ -1,27 +1,22 @@
 import requests
 import calendar
 from datetime import datetime, timedelta
-import duckdb
 
-def data_exists(con, city, year, month):
-    result = con.execute("""
-        SELECT 1 FROM weather 
-        WHERE city = ? AND strftime('%Y', date) = ? AND strftime('%m', date) = ?
-        LIMIT 1
-    """, (city, str(year), f"{month:02}")).fetchone()
-    return result is not None
-
-def get_coordinates(city_name):
+def get_coordinates(city):
     """Get latitude and longitude from city name using Open-Meteo Geocoding API."""
-    url = f"https://geocoding-api.open-meteo.com/v1/search?name={city_name}&count=1&language=en&format=json"
-
+    url = (
+        f"https://geocoding-api.open-meteo.com/v1/search?"
+        f"name={city}"
+        f"&count=1&language=en&format=json"
+    )
+    
     response = requests.get(url)
     if response.status_code != 200:
-        raise Exception(f"Failed to geocode {city_name} (status {response.status_code})")
+        raise Exception(f"Failed to geocode {city} (status {response.status_code})")
     
     results = response.json().get("results")
     if not results:
-        raise Exception(f"No geocoding results found for '{city_name}'")
+        raise Exception(f"No geocoding results found for '{city}'")
 
     return results[0]["latitude"], results[0]["longitude"]
 
@@ -33,13 +28,7 @@ def extract(city, year):
     lat, lon = get_coordinates(city)
     print(f"Geocoded {city}: lat={lat}, lon={lon}")
 
-    con = duckdb.connect("data/processed/weather.duckdb")
-
     for month in range(1, 13):
-        if data_exists(con, city, year, month):
-            print(f"Skipping {city} {calendar.month_name[month]} {year} — already in DB")
-            continue
-
         start_date = f"{year}-{month:02d}-01"
 
         if year == today.year and month == today.month:
@@ -56,7 +45,7 @@ def extract(city, year):
             f"&end_date={end_date}"
             f"&daily=temperature_2m_min,temperature_2m_max"
             f"&timezone=Europe%2FBerlin"
-        )
+            )
 
         response = requests.get(url)
         print(f"📡 Fetching {city} {calendar.month_name[month]} {year}... Status: {response.status_code}")
