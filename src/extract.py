@@ -65,4 +65,5 @@ def extract(city, year):
                 })
         else:
             print(f"⚠️ No daily data found for {city} {calendar.month_name[month]} {year}")
-    return all_data
+            
+    return [(d["city"], d["date"], d["temp_min"], d["temp_max"]) for d in all_data]

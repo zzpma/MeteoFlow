@@ -9,6 +9,7 @@ description = "An ELT pipeline that extracts historical daily temperature data f
 readme = "README.rst"
 authors = [
   {name = "Philip Ma", email = "zz.pma2000@gmail.com"}
+  {name = "Ellah Benerado", email = "ebenerado@gmail.com"}
 ]
 maintainers = [
   {name = "Philip Ma", email = "zz.pma2000@gmail.com"}
@@ -18,7 +19,10 @@ classifiers = [
 ]
 license = {text = "MIT license"}
 dependencies = [
-  "typer"
+  "typer",
+  "duckdb",
+  "pandas",
+  "requests"
 ]
 
 [project.optional-dependencies]
