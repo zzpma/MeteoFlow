@@ -29,7 +29,25 @@ This project uses [`uv`](https://github.com/astral-sh/uv) for managing Python de
 
       pip install uv
 
-2. **Install dependencies from `pyproject.toml`:**
+2. **Create a virtual environment:**
+
+   .. code-block:: bash
+
+      uv venv
+
+3. **Activate the virtual environment:**
+
+   .. code-block:: bash
+
+      # On Windows:
+
+      .venv\Scripts\activate
+
+      # On macOS/Linux:
+
+      source .venv/bin/activate
+
+4. **Install dependencies from `pyproject.toml`:**
 
    .. code-block:: bash
 
