@@ -1,5 +1,4 @@
 import duckdb
-import pandas as pd
 import os
 
 DB_PATH = "data/weather.duckdb"
@@ -12,31 +11,8 @@ def test_duckdb():
         return
     
     con = duckdb.connect(DB_PATH)
-
-    try:
-        row_count = con.execute("SELECT COUNT(*) FROM weather").fetchone()[0]
-        print(f"✅ Row count in weather table: {row_count}")
-
-        print("\n👀 Sample records:")
-        print(con.execute("SELECT * FROM weather LIMIT 5").fetchdf())
-
-        print("\n📆 Date range per city:")
-        print(con.execute("""
-            SELECT city, MIN(date) AS start_date, MAX(date) AS end_date
-            FROM weather GROUP BY city
-        """).fetchdf())
-
-        print("\n⚠️ Null check for temperature columns:")
-        nulls = con.execute("""
-            SELECT COUNT(*) FROM weather WHERE temp_min IS NULL OR temp_max IS NULL
-        """).fetchone()[0]
-        print(f"Found {nulls} records with NULL temperature values.")
-
-    except Exception as e:
-        print(f"❌ Error while querying DuckDB: {e}")
-    finally:
-        con.close()
-
+    test_weather_table(con, "database table")
+    con.close()
 
 def test_parquet():
     print("\n🔍 Testing Parquet File...")
@@ -44,22 +20,50 @@ def test_parquet():
         print(f"❌ Parquet file not found: {PARQUET_PATH}")
         return
     
+    con = duckdb.connect()  # In-memory database
+    test_weather_table(con, "parquet file", f"FROM '{PARQUET_PATH}'")
+    con.close()
+
+def test_weather_table(con, source_name, from_clause="FROM weather"):
     try:
-        df = pd.read_parquet(PARQUET_PATH)
-        print(f"✅ Loaded parquet file: {PARQUET_PATH}")
-        print(f"Total rows: {len(df)}")
-        print("\n👀 Sample records:")
-        print(df.head())
+        # Row count
+        row_count = con.execute(f"SELECT COUNT(*) {from_clause}").fetchone()[0]
+        print(f"✅ Row count in {source_name}: {row_count}")
 
-        print("\n📆 Date range per city:")
-        print(df.groupby("city")["date"].agg(["min", "max"]))
+        # Sample records
+        print(f"\n👀 Sample records from {source_name}:")
+        print(con.execute(f"SELECT * {from_clause} LIMIT 5").fetchdf())
 
-        print("\n⚠️ Null check for temperature columns:")
-        print(df[["temp_min", "temp_max"]].isnull().sum())
+        # Date range per city
+        print(f"\n📆 Date range per city in {source_name}:")
+        print(con.execute(f"""
+            SELECT city, MIN(date) AS start_date, MAX(date) AS end_date
+            {from_clause} GROUP BY city
+        """).fetchdf())
+
+        # Null check
+        print(f"\n⚠️ Null check for temperature columns in {source_name}:")
+        nulls = con.execute(f"""
+            SELECT 
+                SUM(CASE WHEN temp_min IS NULL THEN 1 ELSE 0 END) AS null_temp_min,
+                SUM(CASE WHEN temp_max IS NULL THEN 1 ELSE 0 END) AS null_temp_max
+            {from_clause}
+        """).fetchone()
+        print(f"Found {nulls[0]} NULL temp_min and {nulls[1]} NULL temp_max values")
+
+        # Basic stats
+        print(f"\n📊 Temperature stats in {source_name}:")
+        print(con.execute(f"""
+            SELECT 
+                AVG(temp_min) AS avg_temp_min,
+                AVG(temp_max) AS avg_temp_max,
+                MIN(temp_min) AS min_temp,
+                MAX(temp_max) AS max_temp
+            {from_clause}
+        """).fetchdf())
 
     except Exception as e:
-        print(f"❌ Error while reading Parquet: {e}")
-
+        print(f"❌ Error while testing {source_name}: {e}")
 
 if __name__ == "__main__":
     test_duckdb()
