@@ -1,41 +1,88 @@
-==================================
-cities_of_eternal_spring_in_europe
-==================================
+===========================================
+european_weather_elt: Weather Data Pipeline
+===========================================
+
+An ELT (Extract-Load-Transform) pipeline that retrieves historical daily temperature data from the Open-Meteo API, loads it into a DuckDB database, and optionally exports it to a `.parquet` file for analysis in tools like Power BI.
+
+This project is ideal for climate analysts, researchers, and data scientists investigating weather trends across Europe and comparing recent years with past decades.
+
+-------------------
+🌟 Project Features
+-------------------
+
+- Extracts weather data (min/max temperatures) using city name and year
+- Automatically geocodes cities using Open-Meteo's geocoding API
+- Loads data into DuckDB
+- Exports all collected data as a Parquet file for analysis
+- CLI-powered: simple and scriptable
+- Minimal setup required
+
+----------------------
+📦 Installation & Setup
+----------------------
+
+This project uses [`uv`](https://github.com/astral-sh/uv) for managing Python dependencies.
+
+1. **Install `uv` (only once):**
+
+   .. code-block:: bash
+
+      pip install uv
+
+2. **Install dependencies from `pyproject.toml`:**
+
+   .. code-block:: bash
+
+      uv pip install -r pyproject.toml
+
+-------------------------------
+🛠 How to Run the Data Pipeline
+-------------------------------
+
+Use the CLI to extract weather data for any European city and year.
+
+**Extract + Load (to DB):**
+
+.. code-block:: bash
+
+   python . <city> <year>
+
+Example:
+
+.. code-block:: bash
+
+   python . Lisbon 2024
+
+This:
+- Geocodes the city
+- Extracts daily weather data for all months in that year
+- Loads the results into `data/weather.duckdb`
+
+If data for that city/year already exists in the database, it will be skipped.
+
+-------------------------------
+📤 Exporting Data to Parquet
+-------------------------------
+
+Once you’ve collected data for all the cities and years you want:
+
+.. code-block:: bash
+
+   python . export
+
+This exports all contents of the DuckDB database to:
+
+data/export/weather.parquet
 
 
-.. image:: https://img.shields.io/pypi/v/cities_of_eternal_spring_in_europe.svg
-        :target: https://pypi.python.org/pypi/cities_of_eternal_spring_in_europe
+You can now load this file directly into Power BI or any other analysis tool that supports Parquet format.
 
-.. image:: https://img.shields.io/travis/zzpma/cities_of_eternal_spring_in_europe.svg
-        :target: https://travis-ci.com/zzpma/cities_of_eternal_spring_in_europe
+-------------------
+📝 License & Credits
+-------------------
 
-.. image:: https://readthedocs.org/projects/cities-of-eternal-spring-in-europe/badge/?version=latest
-        :target: https://cities-of-eternal-spring-in-europe.readthedocs.io/en/latest/?version=latest
-        :alt: Documentation Status
-
-
-.. image:: https://pyup.io/repos/github/zzpma/cities_of_eternal_spring_in_europe/shield.svg
-     :target: https://pyup.io/repos/github/zzpma/cities_of_eternal_spring_in_europe/
-     :alt: Updates
-
-
-
-An ELT pipeline that extracts historical daily temperature data for major European cities from Open-Meteo, loads it into DuckDB, and performs SQL-based transformations for climate analysis.
-
-
-* Free software: MIT license
-* Documentation: https://cities-of-eternal-spring-in-europe.readthedocs.io.
-
-
-Features
---------
-
-* TODO
-
-Credits
--------
-
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
+- License: MIT
+- Created with `Cookiecutter` and the `audreyr/cookiecutter-pypackage` template
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
