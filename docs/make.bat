@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=.
 set BUILDDIR=_build
-set SPHINXPROJ=cities_of_eternal_spring_in_europe
+set SPHINXPROJ=MeteoFlow
 
 if "%1" == "" goto help
 

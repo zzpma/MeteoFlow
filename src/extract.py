@@ -24,7 +24,6 @@ def extract(city, year):
     """Extract weather data for a specific city and year."""
     today = datetime.today()
     year_data = []
-
     lat, lon = get_coordinates(city)
     print(f"Geocoded {city}: lat={lat}, lon={lon}")
 

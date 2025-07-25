@@ -3,13 +3,13 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "cities_of_eternal_spring_in_europe"
+name = "MeteoFlow"
 version = "0.1.0"
-description = "An ELT pipeline that extracts historical daily temperature data for major European cities from Open-Meteo, loads it into DuckDB, and performs SQL-based transformations for climate analysis."
+description = "An ELT pipeline that extracts historical daily temperature data from Open-Meteo, loads it into DuckDB, and performs SQL-based transformations for climate analysis."
 readme = "README.rst"
 authors = [
   {name = "Philip Ma", email = "zz.pma2000@gmail.com"}
-  {name = "Ellah Benerado", email = "ebenerado@gmail.com"}
+  ,{name = "Ellah Benerado", email = "ebenerado@gmail.com"}
 ]
 maintainers = [
   {name = "Philip Ma", email = "zz.pma2000@gmail.com"}
@@ -35,9 +35,9 @@ dev = [
 
 [project.urls]
 
-bugs = "https://github.com/zzpma/cities_of_eternal_spring_in_europe/issues"
-changelog = "https://github.com/zzpma/cities_of_eternal_spring_in_europe/blob/master/changelog.md"
-homepage = "https://github.com/zzpma/cities_of_eternal_spring_in_europe"
+bugs = "https://github.com/zzpma/MeteoFlow/issues"
+changelog = "https://github.com/zzpma/MeteoFlow/blob/master/changelog.md"
+homepage = "https://github.com/zzpma/MeteoFlow"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

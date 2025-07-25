@@ -49,7 +49,7 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 
 lint/flake8: ## check style with flake8
-	flake8 cities_of_eternal_spring_in_europe tests
+	flake8 MeteoFlow tests
 
 
 lint: lint/flake8 ## check style
@@ -61,15 +61,15 @@ test-all: ## run tests on every Python version with tox
 	tox
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source cities_of_eternal_spring_in_europe -m pytest
+	coverage run --source MeteoFlow -m pytest
 	coverage report -m
 	coverage html
 	$(BROWSER) htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/cities_of_eternal_spring_in_europe.rst
+	rm -f docs/MeteoFlow.rst
 	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ cities_of_eternal_spring_in_europe
+	sphinx-apidoc -o docs/ MeteoFlow
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(BROWSER) docs/_build/html/index.html

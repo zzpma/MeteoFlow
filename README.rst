@@ -1,5 +1,5 @@
 ===========================================
-european_weather_elt: Weather Data Pipeline
+MeteoFlow: Weather Data Pipeline
 ===========================================
 
 An ELT (Extract-Load-Transform) pipeline that retrieves historical daily temperature data from the Open-Meteo API, loads it into a DuckDB database, and optionally exports it to a `.parquet` file for analysis in tools like Power BI.

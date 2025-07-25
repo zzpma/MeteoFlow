@@ -4,7 +4,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = python -msphinx
-SPHINXPROJ    = cities_of_eternal_spring_in_europe
+SPHINXPROJ    = MeteoFlow
 SOURCEDIR     = .
 BUILDDIR      = _build
 

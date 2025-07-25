@@ -1,4 +1,4 @@
-* cities_of_eternal_spring_in_europe version:
+* MeteoFlow version:
 * Python version:
 * Operating System:
 

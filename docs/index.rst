@@ -1,4 +1,4 @@
-Welcome to cities_of_eternal_spring_in_europe's documentation!
+Welcome to MeteoFlow's documentation!
 ======================================
 
 .. toctree::
