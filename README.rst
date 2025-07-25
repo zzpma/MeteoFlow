@@ -4,7 +4,7 @@ MeteoFlow: Weather Data Pipeline
 
 An ELT (Extract-Load-Transform) pipeline that retrieves historical daily temperature data from the Open-Meteo API, loads it into a DuckDB database, and optionally exports it to a `.parquet` file for analysis in tools like Power BI.
 
-This project is ideal for climate analysts, researchers, and data scientists investigating weather trends across Europe and comparing recent years with past decades.
+This project is ideal for climate analysts, researchers, and data scientists investigating weather trends around the world and comparing recent years with past decades.
 
 -------------------
 🌟 Project Features
@@ -57,7 +57,7 @@ This project uses [`uv`](https://github.com/astral-sh/uv) for managing Python de
 🛠 How to Run the Data Pipeline
 -------------------------------
 
-Use the CLI to extract weather data for any European city and year.
+Use the CLI to extract weather data for any city and year.
 
 **Extract + Load (to DB):**
 
