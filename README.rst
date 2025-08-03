@@ -63,13 +63,13 @@ Use the CLI to extract weather data for any city and year.
 
 .. code-block:: bash
 
-   python . <city> <year>
+   python . get <city> <year>
 
-Example:
+Exampl
 
 .. code-block:: bash
 
-   python . Lisbon 2024
+   python . get Lisbon 2024
 
 This:
 
