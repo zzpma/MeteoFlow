@@ -1,7 +1,7 @@
 import duckdb
 import pandas as pd
 import logging
-from src.extract import extract
+from meteoflow.extract import extract
 
 DB_PATH = "data/weather.duckdb"
 duck = duckdb.connect(DB_PATH)
