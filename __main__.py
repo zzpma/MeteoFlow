@@ -20,7 +20,7 @@ def main():
     args = parser.parse_args()
 
     try:
-        if args.command == "run":
+        if args.command == "get":
             run_pipeline(args.city, args.year)
             logging.info("✅ Pipeline completed successfully.")
 
